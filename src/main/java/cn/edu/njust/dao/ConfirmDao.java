@@ -31,9 +31,29 @@ public class ConfirmDao {
          }
          return list;
     }
-
+	
+	public List<Confirm> getAllconfirm() throws SQLException {
+		List<Confirm> list = new ArrayList<Confirm>();
+    	String sql = "select stu_overview.stuID, stu_overview.name,stu_overview.IDnumber from stu_overview join confirm_list on stu_overview.stuID = confirm_list.stuID";
+    	Connection conn = DbUtil.getCon();   
+        try {
+             PreparedStatement pst = conn.prepareStatement(sql);
+             ResultSet rs = pst.executeQuery();
+             while(rs.next()) {
+             	Confirm cf = new Confirm();
+             	cf.setStuID(rs.getString("stuID"));
+             	cf.setStuName(rs.getString("name"));
+             	cf.setIDnumber(rs.getString("IDnumber"));
+                list.add(cf);
+             }
+         } catch (SQLException e) {
+             e.printStackTrace();
+         }
+         return list;
+    }
+	
 	public Confirm getSelectedconfirm(String stuID) throws SQLException {
-        String sql = "select stuID, name, IDnumber where stuID = '" + stuID + "'";
+        String sql = "select stuID, name, IDnumber from confirm_list where stuID = '" + stuID + "'";
         Connection conn = DbUtil.getCon();
         Confirm cf = new Confirm();
         try {
@@ -50,6 +70,22 @@ public class ConfirmDao {
         return cf;
     }
 
+	public boolean inConfirm(String stuID) throws SQLException {
+        String sql = "select * from confirm_list where stuID = '" + stuID + "'";
+        Connection conn = DbUtil.getCon();
+        Confirm cf = new Confirm();
+        try {
+        	PreparedStatement pst = conn.prepareStatement(sql);
+        	ResultSet rs = pst.executeQuery();
+        	while(rs.next()) {
+        		return true;
+        	}
+        } catch (SQLException e) {
+        	e.printStackTrace();
+        }
+        return false;
+    }
+	
     public boolean modifyconfirmInfo(String stuID, String name, String IDnumber) throws SQLException {
     	String sql = "update confirm_list set name = ? where stuID = " + stuID + "";
     	Connection conn = DbUtil.getCon();
@@ -97,5 +133,23 @@ public class ConfirmDao {
     		return false;
     	}
     }
-	
+	//通过学号添加Confirm表
+	public boolean addConfirm(String stuid) throws SQLException {
+    	String sql = "insert into confirm_list(stuID, name, IDnumbe) values (?, ?, ?)";
+    	Connection conn = DbUtil.getCon();
+    	try {
+    		StudentDao dao = new StudentDao();
+    		Student stu = dao.getInfo(stuid);
+    		PreparedStatement pst = conn.prepareStatement(sql);
+    		pst.setString(1, stu.getStuID());
+    		pst.setString(2, stu.getStuName());
+    		pst.setString(3, stu.getStuPersonID());
+    		int flag = pst.executeUpdate();
+    		pst.close();
+    		return flag > 0 ? true : false;
+    	} catch (SQLException e) {
+    		e.printStackTrace();
+    		return false;
+    	}
+    }
 }

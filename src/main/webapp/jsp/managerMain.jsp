@@ -130,6 +130,8 @@ admin = (Admin) session.getAttribute("user");
   	<li><a href="/CSP/jsp/importScore.jsp">导入成绩</a></li>
   	<li><a href="/CSP/jsp/importStudent.jsp">导入学生</a></li>
   	<li><a href="/CSP/jsp/managerOpen.jsp">开启团报</a></li>
+  	<li><a href="/CSP/jsp/managerIntention.jsp">团报意向管理</a></li>
+  	<li><a href="/CSP/jsp/managerConfirm.jsp">团报名单管理</a></li>
   </ul>
   </body>
 </html>

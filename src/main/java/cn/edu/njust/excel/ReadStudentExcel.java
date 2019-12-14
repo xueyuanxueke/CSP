@@ -19,7 +19,6 @@ import cn.edu.njust.bean.Student;
 public class ReadStudentExcel {
 	
 	List<Student> list1 = new ArrayList<Student>();
-	List<Confirm> list2 = new ArrayList<Confirm>();
 	
 	public List<Student> getList1() {
 		return list1;
@@ -28,15 +27,6 @@ public class ReadStudentExcel {
 	public void setList1(List<Student> list1) {
 		this.list1 = list1;
 	}
-
-	public List<Confirm> getList2() {
-		return list2;
-	}
-
-	public void setList2(List<Confirm> list2) {
-		this.list2 = list2;
-	}
-
 	/*
 	 * inout: .xls文件路径
 	 * output: List<Student>
@@ -66,11 +56,6 @@ public class ReadStudentExcel {
                     String stuid = getValue(stuID);
                     String stuname = getValue(name);
                     String idnum = getValue(IDnum);
-                    
-                    con.setStuID(stuid);
-                    con.setStuName(stuname);
-                    con.setIDnumber(idnum);
-                    list2.add(con);
                     
                     student.setStuID(stuid);
                     student.setStuName(stuname);

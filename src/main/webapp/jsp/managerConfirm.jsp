@@ -30,12 +30,27 @@ admin = (Admin) session.getAttribute("user");
   <body>
   <%if(admin.getAdminGrade().equals("0000")) { %>
   	<center>
-	    <form action="servlet/OpenServelt" method="post" >
-	    	请输入筛选分数线：<input type = "text" name = "score">
-	    	<input type = "submit" name = "open" value = "开启团报报名">
-	    </form>
-	    <form action="servlet/CloseServlet" method="post">
-	    	<input type = "submit" name = "close" value ="关闭团报入口">
+	    <form action="servlet/ConfirmServelt" method="post" >
+	    <table border="1">
+	    	<tr>
+	    		<td>学号</td>
+	    		<td>姓名</td>
+	    		<td>身份证号</td>
+	    	</tr>
+	    	<%
+	    	ConfirmDao dao = new ConfirmDao();
+	    	List<Confirm> list = dao.getAllconfirm();
+	    	for(int i=0; i<list.size(); i++) {
+	    		Confirm con = list.get(i);
+	    	%>
+	    	<tr>
+	    		<td><input type="checkbox"name="stuID"value=<%=con.getStuID() %>><%=con.getStuID() %></td>
+	    		<td><%=con.getStuName() %></td>
+	    		<td><%=con.getIDnumber() %></td>
+	    	</tr>
+	    	<%} %>
+	    	<tr><td><input type="submit" value="确认移出团报名单"></td></tr>
+	    </table>
 	    </form>
     </center>
     <button type="button" onclick="window.location.href='/CSP/jsp/managerMain.jsp';">返回</button>
