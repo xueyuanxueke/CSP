@@ -33,19 +33,23 @@ public class ReadStudentExcel {
 	 * 
 	 */
 	public void readXls(String path, String grade) throws IOException {
-        InputStream is = new FileInputStream(path);
+        FileInputStream is = new FileInputStream(path);
         HSSFWorkbook hssfWorkbook = new HSSFWorkbook(is);
         Student student = null;
         Confirm con = null;
-        
+        System.out.println("read...");
         // 循环工作表Sheet
-        for (int numSheet = 2; numSheet < hssfWorkbook.getNumberOfSheets(); numSheet++) {
+        int num = hssfWorkbook.getNumberOfSheets();
+        //System.out.println(hssfWorkbook.getNumberOfSheets());
+        
+        for (int numSheet = 0; numSheet < hssfWorkbook.getNumberOfSheets(); numSheet++) {
             HSSFSheet hssfSheet = hssfWorkbook.getSheetAt(numSheet);
             if (hssfSheet == null) {
                 continue;
             }
             // 循环行Row
-            for (int rowNum = 1; rowNum <= hssfSheet.getLastRowNum(); rowNum++) {
+            System.out.println(hssfSheet.getLastRowNum());
+            for (int rowNum = 1; rowNum < hssfSheet.getLastRowNum(); rowNum++) {
                 HSSFRow hssfRow = hssfSheet.getRow(rowNum);
                 if (hssfRow != null) {
                     student = new Student();
@@ -57,9 +61,13 @@ public class ReadStudentExcel {
                     String stuname = getValue(name);
                     String idnum = getValue(IDnum);
                     
+                    //System.out.println(stuid);
+                    System.out.println(grade);
+                    
                     student.setStuID(stuid);
                     student.setStuName(stuname);
                     student.setStuPassword(stuid);
+                    student.setStuGrade(grade);
                     student.setStuPersonID(idnum);
                     student.setPubFree(true);
                     student.setScoreNum(0);
@@ -77,7 +85,7 @@ public class ReadStudentExcel {
             if (hssfCell.getCellType() == CellType.BOOLEAN) {
                 // 返回布尔类型的值
                 return String.valueOf(hssfCell.getBooleanCellValue());
-            } else if (hssfCell.getCellType() == CellType.STRING) {
+            } else if (hssfCell.getCellType() == CellType.NUMERIC) {
                 // 返回数值类型的值
                 return String.valueOf(hssfCell.getNumericCellValue());
             } else {

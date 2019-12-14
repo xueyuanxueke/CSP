@@ -35,13 +35,13 @@ public class ReadScoreExcel {
         List<Score> list = new ArrayList<Score>();
         // 循环工作表Sheet
         
-        for (int numSheet = 3; numSheet < hssfWorkbook.getNumberOfSheets(); numSheet++) {
+        for (int numSheet = 0; numSheet < hssfWorkbook.getNumberOfSheets(); numSheet++) {
             HSSFSheet hssfSheet = hssfWorkbook.getSheetAt(numSheet);
             if (hssfSheet == null) {
                 continue;
             }
             // 循环行Row
-            for (int rowNum = 1; rowNum <= hssfSheet.getLastRowNum(); rowNum++) {
+            for (int rowNum = 2; rowNum <= hssfSheet.getLastRowNum(); rowNum++) {
                 HSSFRow hssfRow = hssfSheet.getRow(rowNum);
                 if (hssfRow != null) {
                     score = new Score();

@@ -87,7 +87,7 @@ public class ExcelTwoServlet extends HttpServlet {
             
             //
            
-            
+            String session = "";
             //4、使用ServletFileUpload解析器解析上传数据，解析结果返回的是一个List<FileItem>集合，每一个FileItem对应一个Form表单的输入项
             List<FileItem> list = upload.parseRequest(request);
             for(FileItem item : list){
@@ -96,6 +96,7 @@ public class ExcelTwoServlet extends HttpServlet {
                     String name = item.getFieldName();
                     //解决普通输入项的数据的中文乱码问题
                     String value = item.getString("UTF-8");
+                    session = value;
 //                    String value = item.getString("gbk");
                     //value = new String(value.getBytes("iso8859-1"),"UTF-8");
                     System.out.println(name + "=" + value);
@@ -152,7 +153,7 @@ public class ExcelTwoServlet extends HttpServlet {
                      * @ 待数据库完成实现
                      * 
                      */
-                    String session = request.getParameter("csp");
+                    //String session = request.getParameter("csp");
                     SaveScore ssc = new SaveScore();
                     ssc.save(realSavePath + "\\" + saveFilename, session);
                     //System.out.println("end");

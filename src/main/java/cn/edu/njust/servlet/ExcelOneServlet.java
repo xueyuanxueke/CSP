@@ -1,5 +1,5 @@
 package cn.edu.njust.servlet;
-
+import cn.edu.njust.bean.Admin;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -33,6 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cn.edu.njust.*;
+import cn.edu.njust.bean.Admin;
 import cn.edu.njust.excel.SaveStudent;
 /**
  * Servlet implementation class ExcelOneServelt
@@ -54,6 +55,7 @@ public class ExcelOneServlet extends HttpServlet {
 	 */
 	public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
+		super.init(config);
 	}
 
 	/**
@@ -62,15 +64,16 @@ public class ExcelOneServlet extends HttpServlet {
 	public void destroy() {
 		// TODO Auto-generated method stub
 	}
-
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request,response);
+	}	
+		
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-
         //得到上传文件的保存目录，将上传的文件存放于WEB-INF目录下，不允许外界直接访问，保证上传文件的安全
         String savePath = this.getServletContext().getRealPath("/WEB-INF/uploadStu");
         //上传时生成的临时文件保存目录
@@ -115,7 +118,7 @@ public class ExcelOneServlet extends HttpServlet {
             
             //
            
-            
+            String grade = "";
             //4、使用ServletFileUpload解析器解析上传数据，解析结果返回的是一个List<FileItem>集合，每一个FileItem对应一个Form表单的输入项
             List<FileItem> list = upload.parseRequest(request);
             for(FileItem item : list){
@@ -124,6 +127,7 @@ public class ExcelOneServlet extends HttpServlet {
                     String name = item.getFieldName();
                     //解决普通输入项的数据的中文乱码问题
                     String value = item.getString("UTF-8");
+                    grade = value;
 //                    String value = item.getString("gbk");
                     //value = new String(value.getBytes("iso8859-1"),"UTF-8");
                     System.out.println(name + "=" + value);
@@ -179,7 +183,7 @@ public class ExcelOneServlet extends HttpServlet {
                      * @ 读取excel数据并存入数据库
                      * @ 待数据库完成实现
                      */
-                    String grade = request.getParameter("grade");
+                    
                     SaveStudent saveData2DB = new SaveStudent();
                     saveData2DB.save(realSavePath + "\\" + saveFilename, grade);
                     System.out.println("end");

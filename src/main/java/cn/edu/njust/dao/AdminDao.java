@@ -148,7 +148,7 @@ public class AdminDao {
 	public List<Student> getGradeStudent(String grade) throws SQLException {
 		List<Student> list = new ArrayList<Student>();
 		if(grade.equals("0000")) {
-			String sql = "select stuID from stu_overview";
+			String sql = "select stuID,name,grade from stu_overview";
 	    	Connection conn = DbUtil.getCon();   
 	        try {
 	             PreparedStatement pst = conn.prepareStatement(sql);
@@ -157,13 +157,15 @@ public class AdminDao {
 	             {
 	             	Student stu = new Student();
 	             	stu.setStuID(rs.getString("stuID"));
+	             	stu.setStuName(rs.getString("name"));
+	             	stu.setStuGrade(rs.getString("grade"));
 	                list.add(stu);
 	             }
 	         } catch (SQLException e) {
 	             e.printStackTrace();
 	         }
 		}else {
-			String sql = "select stuID from stu_overview where grade = '" + grade + "'";
+			String sql = "select stuID,name,grade from stu_overview where grade = '" + grade + "'";
 	    	Connection conn = DbUtil.getCon();   
 	        try {
 	             PreparedStatement pst = conn.prepareStatement(sql);
@@ -172,6 +174,8 @@ public class AdminDao {
 	             {
 	             	Student stu = new Student();
 	             	stu.setStuID(rs.getString("stuID"));
+	             	stu.setStuName(rs.getString("name"));
+	             	stu.setStuGrade(grade);
 	                list.add(stu);
 	             }
 	         } catch (SQLException e) {

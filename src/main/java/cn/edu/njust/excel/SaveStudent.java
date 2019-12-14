@@ -17,13 +17,14 @@ public class SaveStudent {
     public void save(String path, String grade) throws IOException, SQLException {
         ReadStudentExcel xlsMain = new ReadStudentExcel();
         StudentDao d = new StudentDao();
-
+        System.out.println(grade);
+        
         xlsMain.readXls(path, grade);
         List<Student> list1 = xlsMain.getList1();
-        
+        System.out.println("saveing...");
         for (int i = 0; i < list1.size(); i++) {
         	Student stu = list1.get(i);
-            
+            System.out.println(stu.getStuID());
             if (!d.isValid(stu.getStuID(), stu.getStuPassword())) {
             	d.addStudent(stu);
             } else {
