@@ -28,6 +28,7 @@ admin = (Admin) session.getAttribute("user");
   </head>
 
   <body>
+  <%if(!admin.getAdminGrade().equals("0000")) { %>
   	<center>
 	    <form action="servlet/OpenServelt" method="post" >
 	    	请输入筛选分数线：<input type = "text" name = "score">
@@ -38,5 +39,8 @@ admin = (Admin) session.getAttribute("user");
 	    </form>
     </center>
     <button type="button" onclick="window.location.href='/CSP/jsp/managerMain.jsp';">返回</button>
+    <% } else { %>
+    	<center><a href="jsp/login.jsp">您并无权限开启or关闭团报,请点此返回登录</a></center>
+    <%} %>
   </body>
 </html>
