@@ -4,6 +4,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
+import javax.servlet.ServletContext; 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.JOptionPane;
@@ -31,12 +32,16 @@ public class OpenServlet extends HttpServlet {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		response.setContentType("text/html;charset=utf-8");
         request.setCharacterEncoding("utf-8");
-        int open = (int)request.getSession().getAttribute("open");
-        if(open == 1) {
+        ServletContext sc = getServletConfig().getServletContext(); 
+        if(sc.getAttribute("open") == null) {
+        	sc.setAttribute("open", 0);
+        }
+        int op = (int) sc.getAttribute("open");
+        if(op == 1) {
         	JOptionPane.showMessageDialog(null, "团报入口已经打开！");
         }else {
-        	request.getSession().setAttribute("open", 1);
-            request.getSession().setAttribute("score", request.getAttribute("score"));
+        	sc.setAttribute("open", 1);
+        	sc.setAttribute("score", request.getParameter("score"));
         }     
         response.sendRedirect("../jsp/managerOpen.jsp");
 		

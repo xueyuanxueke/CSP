@@ -6,7 +6,8 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 Student student = new Student();
 student = (Student) session.getAttribute("user");
-if(session.getAttribute("open") == null || (int)session.getAttribute("open") == 0) {
+
+if(application.getAttribute("open") == null || (int)application.getAttribute("open") == 0) {
 	JOptionPane.showMessageDialog(null, "尚未开启报名途径！");
 %>
 <jsp:forward page="studentMain.jsp"></jsp:forward>

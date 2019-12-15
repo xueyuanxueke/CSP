@@ -31,6 +31,8 @@ admin = (Admin) session.getAttribute("user");
   <%if(admin.getAdminGrade().equals("0000")) { %>
   	<center>
 	    <form action="servlet/ConfirmServelt" method="post" >
+	    <input type="button" value="团报名单导出">
+	    </form>
 	    <table border="1">
 	    	<tr>
 	    		<td>学号</td>
@@ -51,7 +53,6 @@ admin = (Admin) session.getAttribute("user");
 	    	<%} %>
 	    	<tr><td><input type="submit" value="确认移出团报名单"></td></tr>
 	    </table>
-	    </form>
     </center>
     <% } else { %>
     	<center><a href="jsp/login.jsp">您并无此权限,请点此返回登录</a></center>

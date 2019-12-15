@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*, javax.servlet.ServletContext" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -26,6 +26,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
+  <%
+       if(application.getAttribute("counter")==null) {
+          application.setAttribute("counter", "1");
+       } else {
+          String strnum=null;
+          strnum =(String)application.getAttribute("counter");
+
+          int icount=0;
+          icount=Integer.valueOf(strnum).intValue();
+          icount++;
+
+          application.setAttribute("counter",Integer.toString(icount));
+       } 
+    %>
+   
+  	<h4> 您是第<%=application.getAttribute("counter") %>位访问者; </h4>
     <center>
     <form action="servlet/LoginServlet" method="post">
       <table>
