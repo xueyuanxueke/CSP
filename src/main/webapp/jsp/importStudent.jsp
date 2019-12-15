@@ -82,6 +82,8 @@ admin = (Admin) session.getAttribute("user");
 	    	<input type = "submit" name = "submitOne" value = "提交">
 	    </form>
     </center>
+    <%}else { %>
+    <center><a href="jsp/login.jsp">您并无此权限,请点此返回登录</a></center>
     <%} %>
     <button type="button" onclick="window.location.href='/CSP/jsp/managerMain.jsp';">返回</button>
   </body>
